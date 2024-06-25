@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 
 
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
 val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True)
+test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
 
 # Helper function to show a batch
 def show_labels_batch(sample_batched):
@@ -32,3 +32,6 @@ for i_batch, sample_batched in enumerate(train_loader):
         plt.ioff()
         plt.show()
         break
+
+
+print(train_dataset[3]['image'].dtype)

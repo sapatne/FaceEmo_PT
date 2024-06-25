@@ -75,7 +75,7 @@ class VGG16(Module):
 		)
 		self.fcn1 = Sequential(
 			Dropout(0.5),
-			Linear(512, 4096),
+			Linear(512*8*8, 4096),
 			ReLU()
 		)
 		self.fcn2 = Sequential(

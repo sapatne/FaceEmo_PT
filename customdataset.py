@@ -3,9 +3,14 @@ import pandas as pd
 from torch.utils.data import Dataset
 from torchvision.io import read_image
 import torchvision.transforms as T
+import torch
 
 class FERDataset(Dataset):
-	def __init__(self, annotations_csv, img_dir, transform=None):
+	def __init__(self, annotations_csv, img_dir):
+		transform = T.Compose([
+            T.Resize((256, 256)),
+            T.RandomResizedCrop(256)
+        ])
 		img_labels = pd.read_csv(os.path.join('./data/', annotations_csv))
 		self.img_labels = img_labels[img_labels['Folder'] == img_dir]
 		self.img_dir = os.path.join('./data', img_dir)
@@ -16,7 +21,7 @@ class FERDataset(Dataset):
 	
 	def __getitem__(self, index):
 		img_path = os.path.join(self.img_dir, self.img_labels.iloc[index, 1])
-		image = read_image(img_path)
+		image = read_image(img_path).to(torch.float32)
 		label = self.img_labels.iloc[index, 2]
 		if self.transform:
 			image = self.transform(image)
