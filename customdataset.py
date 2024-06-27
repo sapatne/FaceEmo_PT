@@ -6,11 +6,7 @@ import torchvision.transforms as T
 import torch
 
 class FERDataset(Dataset):
-	def __init__(self, annotations_csv, img_dir):
-		transform = T.Compose([
-            T.Resize((256, 256)),
-            T.RandomResizedCrop(256)
-        ])
+	def __init__(self, annotations_csv, img_dir, transform=None):
 		img_labels = pd.read_csv(os.path.join('./data/', annotations_csv))
 		self.img_labels = img_labels[img_labels['Folder'] == img_dir]
 		self.img_dir = os.path.join('./data', img_dir)
